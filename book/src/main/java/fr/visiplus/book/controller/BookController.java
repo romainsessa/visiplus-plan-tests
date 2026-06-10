@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import fr.visiplus.book.dto.ReservationDTO;
 import fr.visiplus.book.service.BookService;
 import fr.visiplus.book.service.ReservationService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -36,15 +38,16 @@ public class BookController {
 	}
 	
 	@GetMapping("/{userId}")
-	public Set<BookDTO> getBooksByUserId(@PathVariable(name = "userId") Long userId) {		
+	public Set<BookDTO> getBooksByUserId(@PathVariable Long userId) {		
 		return bookService.getBooksByUserId(userId);		
 	}
 	
 	@PostMapping("/reserve/{bookId}/{userId}")
-	public ResponseEntity<ReservationDTO> book(@PathVariable(name = "bookId") Long bookId, @PathVariable(name = "userId") Long userId) {		
+	public ResponseEntity<ReservationDTO> book(@PathVariable Long bookId, @PathVariable Long userId) {		
 		try {
 			return ResponseEntity.ok(reservationService.bookByBookIdAndUserId(bookId, userId));
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}		
 	}

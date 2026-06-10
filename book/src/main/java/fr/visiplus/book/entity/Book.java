@@ -1,5 +1,6 @@
 package fr.visiplus.book.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,7 +25,7 @@ public class Book {
 	@Enumerated(EnumType.STRING)
 	private BookStatus status;
 	
-	@OneToOne(mappedBy = "book")
+	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL, optional = true)
 	private Reservation reservation;
 
 	public Long getId() {

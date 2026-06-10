@@ -65,13 +65,15 @@ public class ReservationService {
 		Book book = bookRepository.getReferenceById(bookId);
 		
 		if(book.getStatus().equals(BookStatus.BORROWED)) {
-			throw new Exception();
+			throw new Exception("Already borrowed");
 		} else if(book.getStatus().equals(BookStatus.BOOKED)) {
 			// Une réservation est valide 7 jours. Au delà ça un autre utilisateur peut réserver le livre.
 			if(isReservationMoreThan(book.getReservation(), 7)) {
-				reservationRepository.deleteById(book.getReservation().getId());
+				Reservation oldReservation = book.getReservation();
+				book.setReservation(null);
+				reservationRepository.deleteById(oldReservation.getId());
 			} else {
-				throw new Exception();
+				throw new Exception("Booked < 7 days");
 			}
 		}		
 		
@@ -83,6 +85,8 @@ public class ReservationService {
 		resa.setUser(user);
 		
 		resa = reservationRepository.save(resa);
+		
+		book.setReservation(resa);
 		bookRepository.save(book);		
 		
 		return convert(resa);
