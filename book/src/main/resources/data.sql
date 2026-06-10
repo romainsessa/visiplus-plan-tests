@@ -9,10 +9,10 @@ CREATE TABLE books (
   status VARCHAR(255));
  
 INSERT INTO books (name, description, status) VALUES
-  ('example1', 'a book about something', 'BOOKED'),
-  ('example2', 'a book about something else', 'BOOKED'),
-  ('example3', 'a book about nothing', 'AVAILABLE'),
-  ('example4', 'a book about ...', 'BORROWED');
+  ('Frankenstein', 'A scientist creates a living creature', 'BOOKED'),
+  ('The Little Prince', 'A poetic tale about life and human nature', 'BOOKED'),
+  ('Gatsby', 'American dream', 'AVAILABLE'),
+  ('Moby Dick', 'A man obsessed with hunting a giant whale', 'BORROWED');
 
  CREATE TABLE reservations (
   id INT AUTO_INCREMENT  PRIMARY KEY,
@@ -22,7 +22,7 @@ INSERT INTO books (name, description, status) VALUES
 
 INSERT INTO reservations (book_id, user_id, date_resa) VALUES
   (1,1,'2026-01-01'),
-  (2,2,'2026-05-09');
+  (2,2,'2026-06-10');
   
 CREATE TABLE users (
 	id INT AUTO_INCREMENT  PRIMARY KEY,
