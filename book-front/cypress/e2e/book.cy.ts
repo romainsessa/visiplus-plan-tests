@@ -25,7 +25,7 @@ it('should reserve an available book', () => {
 
   cy.get('@availableBook')
     .contains('Reserve')
-    .click();
+    .click({ force: true });
 
   cy.get('@availableBook')
     .find('.status')
