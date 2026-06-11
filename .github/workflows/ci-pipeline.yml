@@ -96,7 +96,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '25'
-          distribution: 'temurin'
+          distribution: 'temurin'  
+      - name: Build backend
+        run: mvn clean package --file book/pom.xml -DskipTests
       # Node pour Angular
       - name: Setup Node
         uses: actions/setup-node@v4
