@@ -98,7 +98,7 @@ jobs:
           java-version: '25'
           distribution: 'temurin'  
       - name: Build backend
-        run: mvn clean package --file book/pom.xml -DskipTests
+        run: mvn clean package --file book/pom.xml
       # Node pour Angular
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -107,6 +107,9 @@ jobs:
       # Install front deps (important pour scan TS)
       - name: Install frontend dependencies
         run: npm install
+        working-directory: book-front
+      - name: Run unit tests (Jest)
+        run: npm run test
         working-directory: book-front
       # Analyse SonarCloud
       - name: SonarCloud Scan
