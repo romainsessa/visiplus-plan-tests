@@ -91,7 +91,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # Java (obligatoire même pour multi-langage)
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -99,12 +98,10 @@ jobs:
           distribution: 'temurin'  
       - name: Build backend
         run: mvn clean package --file book/pom.xml
-      # Node pour Angular
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      # Install front deps (important pour scan TS)
       - name: Install frontend dependencies
         run: npm install
         working-directory: book-front
