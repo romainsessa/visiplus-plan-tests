@@ -38,3 +38,35 @@ jobs:
     - name: Run tests
       run: npm run test
       working-directory: book-front
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+      - name: Start backend
+        run: |
+          mvn spring-boot:run --file book/pom.xml &
+          sleep 15
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install frontend
+        run: npm install
+        working-directory: book-front
+      - name: Start frontend
+        run: |
+          npm run start &
+          sleep 10
+        working-directory: book-front
+      - name: Run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: book-front
+          start: echo "already started"
